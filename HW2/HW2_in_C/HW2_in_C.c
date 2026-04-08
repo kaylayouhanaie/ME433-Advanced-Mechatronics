@@ -59,3 +59,30 @@ int main()
     }
 }
 
+
+
+// I2C Notes April 7th Class
+// 1k or 10k pull-up resistors on SDA and SCL wires
+// pins idle high (3.3V)
+// multiple SCL and SDA shared in parallel between multiple sensors
+// 9th bit after first 8 address is acknowledge coming from sensor, 0 is good
+// to sent 10 bytes, send 12 bytes packets, which is 12x9 clock cycles
+
+// TO WRITE: ADDR is hard coded address based on sensor data sheet
+// TO READ: first write ending in true, then read
+
+// MCP23008 Chip:
+// we have PDIP package
+// "must be biased externally" means you can't leave it unconnected
+// address byte for this chip: 0100XXXW, where X depends on what address you set it as,
+// and R is R or W depending on if you sent read or write function
+// there are internal pull up resistors, but you have to turn them on with a register
+// port register reads if pins are high or low
+// output latch register determines if an output pin should be high or low
+// must put pull up resistors on SDA and SCL
+// RESET pin: pulse this pin to reset this chip, but igonre it for now unless your code freezes.
+// if you're not using RESET pin, tigh high
+
+// initialization function: initialize I2C pins in Pico code, write to IODIR to set 
+// turn pin on off function
+// read function
