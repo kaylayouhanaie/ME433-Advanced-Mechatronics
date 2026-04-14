@@ -35,7 +35,7 @@ int main()
     gpio_set_dir(LED_PIN, GPIO_OUT);
 
     // I2C Initialisation. Using it at 400Khz.
-    i2c_init(I2C_PORT, 1000*1000);
+    i2c_init(I2C_PORT, 400*1000);
     
     gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
     gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
@@ -76,9 +76,9 @@ int main()
         sprintf(message3,"kaylakaylakaylakaylakayla");
         drawMessage(0,16,message3);
 
-        char message4[50]; 
-        sprintf(message4,"kaylakay");
-        drawMessage(0,24,message4);
+        // char message4[50]; 
+        // sprintf(message4,"kaylakay");
+        // drawMessage(0,24,message4);
 
         //read adc0
         adc_init();
@@ -89,15 +89,15 @@ int main()
         // display adc0 value
         char message_adc[50]; 
         sprintf(message_adc, "ADC0=%d", read_adc0); 
-        drawMessage(45,24,message_adc);
+        drawMessage(0,24,message_adc);
 
         // find and display fps
         unsigned int t2 = to_us_since_boot(get_absolute_time()); // time at end
-        unsigned int runtime = t2 - t1;
-        unsigned int fps = 1/runtime;
+        float runtime = (float)(t2 - t1)/1000000; // convert microseconds to seconds
+        float fps = 1/runtime;
         char message_time[50]; 
-        sprintf(message_time, "FPS=%d", runtime); 
-        drawMessage(87,24,message_time);
+        sprintf(message_time, "FPS=%f", fps); 
+        drawMessage(50,24,message_time);
 
         ssd1306_update();
     }
