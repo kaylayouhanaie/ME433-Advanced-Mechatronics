@@ -74,10 +74,10 @@ int main()
     ssd1306_update();
 
     // check IMU WHO_AM_I register
-    uint8_t me = readPin(WHO_AM_I);
-    char message_me[50]; 
-    sprintf(message_me, "%d", me); 
-    drawMessage(0,0,message_me);
+    // uint8_t me = readPin(WHO_AM_I);
+    // char message_me[50]; 
+    //sprintf(message_me, "%d", me); 
+    //drawMessage(0,0,message_me);
 
 
     // initialize IMU
@@ -89,18 +89,17 @@ int main()
 
     while (true){
         gpio_put(LED_PIN, 1);
-        sleep_ms(500);
-        gpio_put(LED_PIN, 0);
-        sleep_ms(500);
-        printf("kayla\n");
-        sleep_ms(100);
+        // sleep_ms(100);
+        // gpio_put(LED_PIN, 0);
+        // sleep_ms(500);
+
 
         //read raw data
         unsigned char allRawData[14];
         readAllIMU(0x3B,allRawData);
-        for (int i = 0; i < 14; i++) {
-        printf("Reading %d: %d\r\n", i, allRawData[i]);
-        }
+        // for (int i = 0; i < 14; i++) {
+        // printf("Reading %d: %d\r\n", i, allRawData[i]);
+        // }
 
         // convert data to 16 bit integers
         float new_data[7];
@@ -120,22 +119,47 @@ int main()
             index_count++;
         }
 
-        for (int i = 0; i < 7; i++) {
-            printf("New Data %d: %f\r\n", i, new_data[i]);
+        // for (int i = 4; i <= 5; i++) {
+        //     printf("New Data %d: %f\r\n", i, new_data[i]);
+        // }
+
+
+        // draw lines on display
+        if (new_data[5] > 0){
+            int num_dots = (int)(new_data[5]*20.0);
+            for (int i=0; i<num_dots; i++){
+                drawPixel(64+i, 16, 1);
+            }
+            
+        }
+        if (new_data[5] < 0){
+            int num_dots = (int)(new_data[5]*20.0);
+            for (int i=0; i<num_dots; i++){
+                drawPixel(64-i, 16, 1);
+            }
+            
+        }
+        if (new_data[4] > 0){
+            int num_dots = (int)(new_data[4]*20.0);
+            for (int i=0; i<num_dots; i++){
+                drawPixel(64, 16+i, 1);
+            }
+            
         }
 
-        // unsigned char my_letter = 'Y';
-        // if (new_data[1] < 10){
-        //     drawLetter(30,30,my_letter);
-        // }
+        if (new_data[4] < 0){
+            int num_dots = (int)(new_data[4]*20.0);
+            for (int i=0; i<num_dots; i++){
+                drawPixel(64, 16-i, 1);
+            }
+            
+        }
+
+
         ssd1306_update();
+        ssd1306_clear();
     }
     
-
-    // int16_t accel = new_data[2];
-    // char message_accel[50]; 
-    // sprintf(message_accel, "%d", accel); 
-    // drawMessage(0,30,message_accel);
 
 
 }
@@ -165,19 +189,6 @@ int16_t convertData(unsigned char byte1, unsigned char byte2){
     int16_t converted_data = (byte1 << 8) | byte2;
     return converted_data;
 }
-
-
-/*
-April 14th Lecture notes
-look at datasheet to find bits to change for chihp initialization three registers
-
-find which way is down by subtracting gyroscope from accelerometer
-
-only care about x and y acceleration data
-
-*/ 
-
-
 
 
 
