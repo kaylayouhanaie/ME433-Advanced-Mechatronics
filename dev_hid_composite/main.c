@@ -301,20 +301,9 @@ static void send_hid_report(uint8_t report_id, uint32_t btn)
         drawMessage(0,9,message_accely);
         ssd1306_update();
 
-        int8_t deltax = 0;
-        int8_t deltay = 0;
-        if (accelx>0){
-          deltax = -5;
-        }
-        if (accelx<0){
-          deltax = 5;
-        }
-        if (accely>0){
-          deltay = -5;
-        }
-        if (accely<0){
-          deltay = 5;
-        }
+        int8_t deltax = -accelx*10;
+        int8_t deltay = -accely*10;
+
         tud_hid_mouse_report(REPORT_ID_MOUSE, 0x00, deltax, deltay, 0, 0);
       }
 
