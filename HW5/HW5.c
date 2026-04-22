@@ -74,10 +74,11 @@ int main()
     ssd1306_update();
 
     // check IMU WHO_AM_I register
-    // uint8_t me = readPin(WHO_AM_I);
-    // char message_me[50]; 
-    //sprintf(message_me, "%d", me); 
-    //drawMessage(0,0,message_me);
+    uint8_t me = readPin(WHO_AM_I);
+    char message_me[50]; 
+    sprintf(message_me, "%d", me); 
+    drawMessage(0,0,message_me);
+    ssd1306_update();
 
 
     // initialize IMU
