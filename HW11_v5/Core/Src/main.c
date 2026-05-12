@@ -21,6 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <string.h>
 
 /* USER CODE END Includes */
 
@@ -97,7 +98,6 @@ int main(void)
   BSP_LED_Init(LED_GREEN);
   BSP_LED_Init(LED_BLUE);
 
-
   /* Initialize USER push-button, will be used to trigger an interrupt each time it's pressed.*/
   BSP_PB_Init(BUTTON_USER, BUTTON_MODE_EXTI);
 
@@ -138,12 +138,40 @@ int main(void)
       BSP_LED_Toggle(LED_BLUE);
       printf("helloooooo\r\n");
 
+//      uint8_t buf[1];
+//          // Read from computer, send to Pico
+//          if (HAL_UART_Receive(&hcom_uart[COM1], buf, 1, 10) == HAL_OK) {
+//              HAL_UART_Transmit(&huart1, buf, 1, 100);
+//          }
+//
+//          // Read from Pico, send to computer
+//          if (HAL_UART_Receive(&huart1, buf, 1, 10) == HAL_OK) {
+//              HAL_UART_Transmit(&hcom_uart[COM1], buf, 1, 100);
+//          }
+
       /* ..... Perform your action ..... */
     }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+    //char msg[100];
+    //char data[1000];
+    //int index = 0;
+    //HAL_UART_Receive(&huart1, msg, 100, 10);
+    //int i;
+//    int read_number;
+//    for (int i=0; i<strlen(msg); i++){
+//    	if (msg[i]=='\n'){
+//    		sscanf(data,"%d", &read_number);
+//    		index = 0;
+//    	} else {
+//    		data[index] = msg[i];
+//    		index++;
+//    		if (index==1000){
+//    			index = 0;
+//    		}
+//    	}
+//    }
   /* USER CODE END 3 */
 }
 
